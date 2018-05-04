@@ -7,6 +7,6 @@
  * Date: 2018/5/3
  * Time: 13:51
  */
-require_once './Core/Core.php.php';
+require_once './Core/Core.php';
 
-Core::Init ();
+(new Core())->Init ();

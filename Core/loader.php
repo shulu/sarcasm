@@ -15,12 +15,12 @@ class loader
 	
 	public static function autoload($need_load)
 	{
-		if (strpos ('\\', $need_load))
+		if (strpos ($need_load, '\\'))
 		{
 			list($namespace, $class_name) = explode ("\\", $need_load);
 			$class_file = ROOT_PATH.$namespace.DS.$class_name.'.'.EXT;
+			#echo $class_file;
 		}
-		
 		include $class_file;
 	}
 }

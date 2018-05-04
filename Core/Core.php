@@ -7,31 +7,25 @@
  * Date: 2018/5/3
  * Time: 14:07
  */
-
+use Core\common, Core\router;
 define ('EXT', 'php');
 define ('DS', DIRECTORY_SEPARATOR);
 define ('ROOT_PATH', dirname (realpath (__DIR__)).DS);
+define ('APP_PATH', ROOT_PATH.'Application'.DS);
 define ('CORE_PATH', __DIR__.DS);
-define ('CONF_PATH', ROOT_PATH.DS.'conf'.DS);
+define ('CONF_PATH', ROOT_PATH.'conf'.DS);
 
+require_once __DIR__.'/loader.php';
 
 spl_autoload_register (['loader', 'autoload'], true, true);
 
 class Core
 {
-	protected $com = null;
-	protected $task = null;
+	use router;
 	
-	public function __construct ()
+	public function Init ()
 	{
-		$this->com = $_GET['com'];
-		$this->task = $_GET['task'];
-	}
-	
-	public Static function Init ()
-	{
-		$conf = common::getConf ('');
-		#var_dump ($conf);
+		$this->router ();
 	}
 }
 
