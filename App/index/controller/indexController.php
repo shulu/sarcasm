@@ -11,10 +11,10 @@
 namespace Application\index;
 
 
-class demoController
+class indexController
 {
 	
-	public function demo ()
+	public function index ()
 	{
 		printJson ('this is '.__CLASS__);
 	}

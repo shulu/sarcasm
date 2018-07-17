@@ -7,6 +7,13 @@
  * Date: 2018/5/3
  * Time: 13:51
  */
+
+ini_set ('display_errors', 1);
+error_reporting (E_ALL);
+
+
+print 1;
+
 require_once './Core/Core.php';
 
-(new Core())->Init ();
+Core::Init ();

@@ -7,7 +7,7 @@
  * Date: 2018/5/3
  * Time: 16:00
  */
-use Core\Router;
+
 
 class loader
 {
@@ -20,7 +20,7 @@ class loader
 		{
 			list($namespace, $class_name) = explode ("\\", $need_load);
 			$class_file = ROOT_PATH.$namespace.DS.$class_name.'.'.EXT;
-			#echo $class_file;
+			printJson ($class_file);
 		}
 		require_once $class_file;
 	}
