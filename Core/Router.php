@@ -28,8 +28,8 @@ class router
 	{
 		$this->app = checkData ($_GET['app']) ? $_GET['app'] : $this->app ;
 		$this->controller = $_GET['com'] ? $_GET['com'] : $this->controller;
-		$this->action = $_GET['action'] ? $_GET['action'] : $this->action;
-		$this->name_space = 'App\\'.$this->app.'\\';
+		$this->task = $_GET['task'] ? $_GET['task'] : $this->task;
+		$this->name_space = 'Application\\'.$this->app.'\\';
 	}
 	
 	public static function getInstance ()
@@ -49,20 +49,20 @@ class router
 			$class = $this->name_space.$this->controller.'Controller';
 			if (class_exists ($class) )
 			{
-				printJson (method_exists($class, $this->action));
-				if (method_exists ($class, $this->action))
+				#printJson (method_exists($class, $this->task));
+				if (method_exists ($class, $this->task))
 				{
-					printJson([$class, $this->action]);
+					#printJson([$class, $this->task]);
 					try {
-						call_user_func_array ([$class, $this->action], []);
+						call_user_func ([$class, $this->task]);
 					} catch (\Exception $e){
 						echo 'Caught exception: ',  $e->getMessage(), "\n";
 					}
 				}else{
-					trigger_error("function ".$this->action." is not existed.",E_USER_ERROR);
+					trigger_error("function ".$this->task." is not existed.",E_USER_ERROR);
 				}
 			}else{
-				trigger_error("file {$class} is not existed.",E_USER_ERROR);
+				trigger_error("Class {$class} is not existed.",E_USER_ERROR);
 			}
 		}else{
 			trigger_error("file {$class_file} is not existed.",E_USER_ERROR);
