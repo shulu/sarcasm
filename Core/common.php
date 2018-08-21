@@ -23,3 +23,9 @@ function printJson($data)
 	echo '<br/>';
 	print_r (json_encode ($data, JSON_UNESCAPED_SLASHES));
 }
+
+function getConf($conf_name = '')
+{
+	$conf = require_once CONF_PATH.'conf.php';
+	return $conf[$conf_name];
+}
