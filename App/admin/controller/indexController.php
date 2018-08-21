@@ -7,7 +7,7 @@
  * Date: 2018/5/3
  * Time: 15:45
  */
-namespace Application\Admin;
+namespace App\Admin\Controller;
 
 class IndexController
 {

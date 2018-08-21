@@ -9,7 +9,7 @@
  */
 namespace Core;
 
-trait singleton
+trait Singleton
 {
 	
 	public function __clone() {

@@ -18,9 +18,12 @@ class loader
 	{
 		if (strpos ($need_load, '\\'))
 		{
-			list($namespace, $class_name) = explode ("\\", $need_load);
-			$class_file = ROOT_PATH.$namespace.DS.$class_name.'.'.EXT;
-			printJson ($class_file);
+			#var_dump (explode ("\\", $need_load));
+			#list($namespace, $class_name) = explode ("\\", $need_load);
+			#$class_name = ucfirst ($class_name);
+			$need_load = str_replace ('\\', '/', $need_load);
+			$class_file = ROOT_PATH.$need_load.'.'.EXT;
+			#printJson ($class_file);
 		}
 		require_once $class_file;
 	}

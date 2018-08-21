@@ -7,7 +7,7 @@
  * Date: 2018/5/3
  * Time: 14:07
  */
-use Core\singleton, Core\router;
+use Core\Singleton, Core\Router;
 define ('EXT', 'php');
 define ('DS', DIRECTORY_SEPARATOR);
 define ('ROOT_PATH', dirname (realpath (__DIR__)).DS);
@@ -22,11 +22,11 @@ spl_autoload_register (['loader', 'autoload'], true, true);
 
 class Core
 {
-	use singleton;
+	use Singleton;
 	
 	public static function Init ()
 	{
-		router::getInstance ()->router ();
+		Router::getInstance ()->router ();
 	}
 }
 

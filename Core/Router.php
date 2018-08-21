@@ -10,7 +10,7 @@
 namespace Core;
 use Core\singleton;
 
-class router
+class Router
 {
 	use Singleton;
 	
@@ -20,16 +20,18 @@ class router
 	private static  $_instance = NULL;
 	
 	public $app = 'index';
-	public $name_space = null;
+	public $name_space = 'App';
 	public $controller = 'index';
-	public $action = 'index';
+	public $task = 'index';
+	public $params = [];
 	
 	private function __construct ()
 	{
 		$this->app = checkData ($_GET['app']) ? $_GET['app'] : $this->app ;
 		$this->controller = $_GET['com'] ? $_GET['com'] : $this->controller;
 		$this->task = $_GET['task'] ? $_GET['task'] : $this->task;
-		$this->name_space = 'Application\\'.$this->app.'\\';
+		$this->name_space = 'App\\'.$this->app.'\\Controller\\';
+		$this->params = [];
 	}
 	
 	public static function getInstance ()
@@ -41,20 +43,18 @@ class router
 	public function router ()
 	{
 		$class_file =  APP_PATH.$this->app.DS.'controller'.DS.$this->controller.'Controller.'.EXT;
-		printJson (file_exists ($class_file));
-		$reflectClass = new \ReflectionClass($class_file);
-		printJson ($reflectClass);
 		if (file_exists ($class_file))
 		{
-			$class = $this->name_space.$this->controller.'Controller';
+			$class = $this->name_space.ucfirst ($this->controller.'Controller');
 			if (class_exists ($class) )
 			{
-				#printJson (method_exists($class, $this->task));
+				$reflectClass = new \ReflectionClass($class);
+				$instance = $reflectClass->newInstance ();
 				if (method_exists ($class, $this->task))
 				{
-					#printJson([$class, $this->task]);
 					try {
-						call_user_func ([$class, $this->task]);
+						$reflectMethod = $reflectClass->getMethod ($this->task);
+						$reflectMethod->invokeArgs ($instance, $this->params);
 					} catch (\Exception $e){
 						echo 'Caught exception: ',  $e->getMessage(), "\n";
 					}
