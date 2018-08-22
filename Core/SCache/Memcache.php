@@ -5,16 +5,14 @@
  * -------------------------
  * User: shulu
  * Date: 2018/8/21
- * Time: 10:24
+ * Time: 10:28
  */
 
-namespace Core\Cache;
+namespace Core\SCache;
 
 
-class Mysql extends Cache
+class Memcache extends SCache
 {
-	
-	
 	public function get ()
 	{
 		// TODO: Implement get() method.
@@ -24,4 +22,5 @@ class Mysql extends Cache
 	{
 		// TODO: Implement set() method.
 	}
+	
 }

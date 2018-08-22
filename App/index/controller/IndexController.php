@@ -9,20 +9,15 @@
  */
 namespace App\index\Controller;
 
-use Core\Cache\SRedis;
+use Core\SCache\SRedis;
+use Core\SSQL\SMysql;
 
 class IndexController
 {
-	public function __construct ()
-	{
-	
-	}
-	
 	public function index ()
 	{
-		print_r (SRedis::getInstance ()->ping ());
-		print_r (SRedis::getInstance ()->set ('sarcasme', 'sarcasme'));
-		print_r (SRedis::getInstance ()->get ('sarcasme'));
-		#printJson (__METHOD__);
+		printJson ( SMysql::getInstance ()->query ());
+		printJson ( SRedis::getInstance ()->ping ());
+		printJson (__METHOD__);
 	}
 }

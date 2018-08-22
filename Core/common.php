@@ -26,6 +26,6 @@ function printJson($data)
 
 function getConf($conf_name = '')
 {
-	$conf = require_once CONF_PATH.'conf.php';
+	$conf = require CONF_PATH.'conf.php';
 	return $conf[$conf_name];
 }

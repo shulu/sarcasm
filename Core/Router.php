@@ -48,18 +48,18 @@ class Router
 			$class = $this->name_space.ucfirst ($this->controller.'Controller');
 			if (class_exists ($class) )
 			{
-				$reflectClass = new \ReflectionClass($class);
-				$instance = $reflectClass->newInstance ();
-				if (method_exists ($class, $this->task))
-				{
-					try {
-						$reflectMethod = $reflectClass->getMethod ($this->task);
-						$reflectMethod->invokeArgs ($instance, $this->params);
-					} catch (\Exception $e){
-						echo 'Caught exception: ',  $e->getMessage(), "\n";
+				try {
+					$reflectClass = new \ReflectionClass($class);
+					$instance = $reflectClass->newInstanceArgs ();
+					if (method_exists ($class, $this->task))
+					{
+							$reflectMethod = $reflectClass->getMethod ($this->task);
+							$reflectMethod->invokeArgs ($instance, []);
+					}else{
+						trigger_error("function ".$this->task." is not existed.",E_USER_ERROR);
 					}
-				}else{
-					trigger_error("function ".$this->task." is not existed.",E_USER_ERROR);
+				} catch (\ReflectionException $e){
+					echo 'Reflect exception: ', $e->getMessage (), "\n";
 				}
 			}else{
 				trigger_error("Class {$class} is not existed.",E_USER_ERROR);

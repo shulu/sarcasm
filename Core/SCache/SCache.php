@@ -8,10 +8,10 @@
  * Time: 10:23
  */
 
-namespace Core\Cache;
+namespace Core\SCache;
 
 
-abstract class Cache
+abstract class SCache
 {
 	abstract public function get ();
 	

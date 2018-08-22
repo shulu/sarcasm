@@ -23,7 +23,7 @@ class loader
 			#$class_name = ucfirst ($class_name);
 			$need_load = str_replace ('\\', '/', $need_load);
 			$class_file = ROOT_PATH.$need_load.'.'.EXT;
-			#printJson ($class_file);
+			//printJson ($class_file);
 		}
 		require_once $class_file;
 	}

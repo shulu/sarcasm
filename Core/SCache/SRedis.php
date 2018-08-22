@@ -8,19 +8,19 @@
  * Time: 10:24
  */
 
-namespace Core\Cache;
+namespace Core\SCache;
 
 
-class SRedis extends Cache
+class SRedis extends SCache
 {
 	private static $redis = null;
 	private static $_instance = null;
 	
-	private function __construct ()
+	private function __construct ($conf = 'redis')
 	{
-		$conf =  getConf ('redis');
+		$conf =  getConf ($conf);
 		self::$redis = new \Redis();
-		self::$redis->connect ($conf['host'], $conf['port']);
+		self::$redis->connect ($conf['host'], $conf['port']) or die('cannot connect redis');
 	}
 	
 	public static function getInstance ()

@@ -1,17 +1,17 @@
 <?php
 /**
  * -------------------------
- *
+ *   文件存储
  * -------------------------
  * User: shulu
  * Date: 2018/8/21
- * Time: 10:28
+ * Time: 10:25
  */
 
-namespace Core\Cache;
+namespace Core\SCache;
 
 
-class Memcache extends Cache
+class SFile extends SCache
 {
 	public function get ()
 	{
@@ -22,5 +22,4 @@ class Memcache extends Cache
 	{
 		// TODO: Implement set() method.
 	}
-	
 }
