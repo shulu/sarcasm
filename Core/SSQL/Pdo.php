@@ -11,10 +11,12 @@
 namespace Core\SSQL;
 
 
-abstract class Sql
+abstract class Pdo
 {
 	protected static $db = null;
 	
+	protected static $_lastInsertId = null;
+
 	protected function __construct ($conf = 'mysql')
 	{
 		$conf = getConf ($conf);
@@ -36,4 +38,17 @@ abstract class Sql
 	abstract function update();
 	
 	abstract function delete();
+	
+	public static function lastInsertId()
+	{
+		self::$_lastInsertId = self::$db->lastInsertId ();
+		return self::$_lastInsertId;
+	}
+	
+	public static function returnError()
+	{
+		$err_code = self::$db->errorCode ();
+		$err_info = json_encode (self::$db->errorInfo ());
+		return "Error Code: {$err_code} Error Info: {$err_info}";
+	}
 }

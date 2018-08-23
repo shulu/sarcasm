@@ -11,9 +11,11 @@
 namespace Core\SSQL;
 
 
-class SMysql extends Sql
+class SMysql extends Pdo
 {
 	private static $_instance = null;
+	
+	private $_sql = null;
 	
 	public function __construct ($conf = 'mysql')
 	{
@@ -26,11 +28,11 @@ class SMysql extends Sql
 		return self::$_instance;
 	}
 	
-	public function query ($sql = '', $val = [])
+	public function query ($val = [])
 	{
 		// TODO: Implement query() method.
 		try{
-			$prepare_statement = self::$db->prepare ($sql);
+			$prepare_statement = self::$db->prepare ($this->_sql);
 			$result = $prepare_statement->execute ($val);
 			return $result;
 		}catch (\PDOException $e)
@@ -40,9 +42,28 @@ class SMysql extends Sql
 		
 	}
 	
-	public function select ()
+	public function select ($fields = '')
 	{
 		// TODO: Implement select() method.
+		$this->_sql = "SELECT {$fields}";
+		return $this;
+	}
+	
+	public function from ($table_name = '')
+	{
+		$this->_sql .= " FROM {$table_name}";
+		return $this;
+	}
+	
+	public function where ($wheres = '')
+	{
+		$this->_sql .= " WHERE {$wheres}";
+		return $this;
+	}
+	
+	public function return_sql ()
+	{
+		return $this->_sql;
 	}
 	
 	public function insert ()
@@ -59,4 +80,5 @@ class SMysql extends Sql
 	{
 		// TODO: Implement delete() method.
 	}
+	
 }
