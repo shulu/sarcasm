@@ -29,7 +29,8 @@ abstract class Pdo
 		}
 	}
 	
-	protected function __destruct() {
+	protected function close()
+	{
 		self::$db = null;
 	}
 	

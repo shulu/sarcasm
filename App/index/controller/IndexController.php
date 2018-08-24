@@ -16,8 +16,8 @@ class IndexController
 {
 	public function index ()
 	{
-		printJson (SMysql::getInstance ()->select ('a')->from ('b')->where ('a=b')->query ([]));
-		
+		SMysql::getInstance ()->start_transaction = true;
+		printJson (SMysql::getInstance ()->select ('a')->from ('b')->where ('a=b')->return_sql ());
 		printJson ( SMysql::getInstance ()->query ());
 		print_r (SMysql::lastInsertId ());
 		printJson ( SRedis::getInstance ()->ping ());

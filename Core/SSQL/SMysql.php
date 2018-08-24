@@ -17,9 +17,12 @@ class SMysql extends Pdo
 	
 	private $_sql = null;
 	
+	public $start_transaction = false;
+	
 	public function __construct ($conf = 'mysql')
 	{
 		parent::__construct ($conf);
+		self::$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 	}
 	
 	public static function getInstance ()
@@ -32,11 +35,14 @@ class SMysql extends Pdo
 	{
 		// TODO: Implement query() method.
 		try{
+			if ($this->start_transaction) self::$db->beginTransaction ();
 			$prepare_statement = self::$db->prepare ($this->_sql);
 			$result = $prepare_statement->execute ($val);
+			if ($this->start_transaction) self::$db->commit ();
 			return $result;
 		}catch (\PDOException $e)
 		{
+			if ($this->start_transaction) self::$db->rollBack ();
 			die('PDO Error '.$e->getMessage (). "<br/>");
 		}
 		
@@ -61,24 +67,53 @@ class SMysql extends Pdo
 		return $this;
 	}
 	
+	public function groupBy ($groups = '')
+	{
+		$this->_sql = " GROUP BY {$groups}";
+		return $this;
+	}
+	
+	public function orderBy ($orders = '')
+	{
+		$this->_sql = " ORDER BY {$orders}";
+		return $this;
+	}
+	
+	public function limit ($offset, $page=0)
+	{
+		$this->_sql = " LIMIT {$page}, {$offset}";
+		return $this;
+	}
+	
+	public function having ($having = '')
+	{
+		$this->_sql = " HAVING {$having}";
+		return $this->_sql;
+	}
+	
 	public function return_sql ()
 	{
 		return $this->_sql;
 	}
 	
-	public function insert ()
+	public function insert ($table_name = '')
 	{
 		// TODO: Implement insert() method.
+		$this->_sql = "INSERT INTO {$table_name}";
 	}
 	
-	public function update ()
+	public function update ($table_name = '')
 	{
 		// TODO: Implement update() method.
+		$this->_sql = "UPDATE {$table_name} SET";
+		return $this;
 	}
 	
-	public function delete ()
+	public function delete ($table_name = '')
 	{
 		// TODO: Implement delete() method.
+		$this->_sql = "DELETE FROM {$table_name}";
+		return $this;
 	}
 	
 }
