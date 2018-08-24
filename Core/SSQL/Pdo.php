@@ -29,6 +29,10 @@ abstract class Pdo
 		}
 	}
 	
+	protected function __destruct() {
+		self::$db = null;
+	}
+	
 	abstract function query();
 	
 	abstract function insert();
